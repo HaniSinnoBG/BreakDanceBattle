@@ -5,8 +5,7 @@ using System.Text;
 namespace BreakDanceBattles.Data.Models
 {
     public class Competition
-    {   
-        
+    {
         public int Id { get; set; }
 
         public string Name { get; set; }
@@ -17,9 +16,21 @@ namespace BreakDanceBattles.Data.Models
 
         public string AddedByUserId { get; set; }
 
-        //country
+        public virtual ApplicationUser AddedByUser { get; set; }
 
-      
+        public int CountryId { get; set; }
+
+        public virtual Country Country { get; set; }
+
+        public virtual ICollection<Category> Categories { get; set; }
+
+        public ICollection<ApplicationUser> JoinedUsers { get; set; }
+
+        public int ImageId { get; set; }
+
+        public virtual Image Images { get; set; }
+
+
 
 
     }
