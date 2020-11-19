@@ -1,12 +1,17 @@
-﻿using System;
+﻿using BreakDanceBattles.Data.Common.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace BreakDanceBattles.Data.Models
 {
-    public class Competition
+    public class Competition : BaseDeletableModel<int>
     {
-        public int Id { get; set; }
+        public Competition()
+        {
+            this.Categories = new HashSet<Category>();
+            this.JoinedUsers = new HashSet<ApplicationUser>();
+        }
 
         public string Name { get; set; }
 
@@ -24,7 +29,7 @@ namespace BreakDanceBattles.Data.Models
 
         public virtual ICollection<Category> Categories { get; set; }
 
-        public ICollection<ApplicationUser> JoinedUsers { get; set; }
+        public virtual ICollection<ApplicationUser> JoinedUsers { get; set; }
 
         public int ImageId { get; set; }
 

@@ -22,6 +22,7 @@
     <ProjectReference Include="..\..\Data\BreakDanceBattles.Data.Common\BreakDanceBattles.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\BreakDanceBattles.Data.Models\BreakDanceBattles.Data.Models.csproj" />
     <ProjectReference Include="..\BreakDanceBattles.Services.Mapping\BreakDanceBattles.Services.Mapping.csproj" />
+	  <ProjectReference Include="..\..\Web\BreakDanceBattles.Web.ViewModels\BreakDanceBattles.Web.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

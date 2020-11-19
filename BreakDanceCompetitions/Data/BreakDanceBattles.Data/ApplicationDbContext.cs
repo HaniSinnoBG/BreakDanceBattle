@@ -23,7 +23,11 @@
             : base(options)
         {
         }
-
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Competition> Competitions { get; set; }
+        public DbSet<CompetitionCategory> CompetitionCategories { get; set; }
+        public DbSet<Image> Images { get; set; }
+        public DbSet<Country> Countries { get; set; }
         public DbSet<Setting> Settings { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
