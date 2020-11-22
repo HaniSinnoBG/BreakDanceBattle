@@ -9,6 +9,7 @@
     using BreakDanceBattles.Data.Repositories;
     using BreakDanceBattles.Data.Seeding;
     using BreakDanceBattles.Services.Data;
+    using BreakDanceBattles.Services.Data.Contracts;
     using BreakDanceBattles.Services.Mapping;
     using BreakDanceBattles.Services.Messaging;
     using BreakDanceBattles.Web.ViewModels;
@@ -64,6 +65,7 @@
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
+            services.AddTransient<ICompetitionService, CompetitionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
