@@ -14,5 +14,12 @@ namespace BreakDanceBattles.Web.ViewModels.Competitions
         [MinLength(20)]
         public string Description { get; set; }
         public DateTime DateTime { get; set; }
+
+        public int CountryId { get; set; }
+
+
+
+        public IEnumerable<CompetitionCategoryInputModel> Categories { get; set; }
+        public IEnumerable<KeyValuePair<string, string>> CountryItems { get; set; }
     }
 }

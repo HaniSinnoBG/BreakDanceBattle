@@ -464,7 +464,7 @@ namespace BreakDanceBattles.Data.Migrations
                         .HasForeignKey("AddedByUserId");
 
                     b.HasOne("BreakDanceBattles.Data.Models.Country", "Country")
-                        .WithMany()
+                        .WithMany("Competitions")
                         .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();

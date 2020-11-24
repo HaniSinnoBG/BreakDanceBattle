@@ -19,12 +19,16 @@ namespace BreakDanceBattles.Services.Data
 
         public async Task CreateAsync(CreateCompetitionInputModel input)
         {
+            
             var competition = new Competition
             {
                 Name = input.Name,
                 Description = input.Description,
                 DateTime = input.DateTime,
+                CountryId = input.CountryId,
+               
             };
+            
             await this.competitionsRepository.AddAsync(competition);
             await this.competitionsRepository.SaveChangesAsync();
         }

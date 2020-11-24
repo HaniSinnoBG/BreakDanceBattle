@@ -7,7 +7,11 @@ namespace BreakDanceBattles.Data.Models
 {
     public class Country : BaseDeletableModel<int>
     {
-        public int Id { get; set; }
+        public Country()
+        {
+            this.Competitions = new HashSet<Competition>();
+        }
         public string Name { get; set; }
+        public virtual ICollection<Competition> Competitions { get; set; }
     }
 }

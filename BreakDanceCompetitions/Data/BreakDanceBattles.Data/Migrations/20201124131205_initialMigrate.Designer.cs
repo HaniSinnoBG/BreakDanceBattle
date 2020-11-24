@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BreakDanceBattles.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191224074400_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20201124131205_initialMigrate")]
+    partial class initialMigrate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.0")
+                .HasAnnotation("ProductVersion", "3.1.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -68,6 +68,9 @@ namespace BreakDanceBattles.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CompetitionId")
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -128,6 +131,8 @@ namespace BreakDanceBattles.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CompetitionId");
+
                     b.HasIndex("IsDeleted");
 
                     b.HasIndex("NormalizedEmail")
@@ -139,6 +144,169 @@ namespace BreakDanceBattles.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("BreakDanceBattles.Data.Models.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("CompetitionId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompetitionId");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("BreakDanceBattles.Data.Models.Competition", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AddedByUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ImageId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddedByUserId");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("Competitions");
+                });
+
+            modelBuilder.Entity("BreakDanceBattles.Data.Models.CompetitionCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CompetitionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("CompetitionId");
+
+                    b.ToTable("CompetitionCategories");
+                });
+
+            modelBuilder.Entity("BreakDanceBattles.Data.Models.Country", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("Countries");
+                });
+
+            modelBuilder.Entity("BreakDanceBattles.Data.Models.Image", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AddedByUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("CompetitionId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Extension")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddedByUserId");
+
+                    b.HasIndex("CompetitionId")
+                        .IsUnique();
+
+                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("BreakDanceBattles.Data.Models.Setting", b =>
@@ -275,6 +443,61 @@ namespace BreakDanceBattles.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("BreakDanceBattles.Data.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("BreakDanceBattles.Data.Models.Competition", null)
+                        .WithMany("JoinedUsers")
+                        .HasForeignKey("CompetitionId");
+                });
+
+            modelBuilder.Entity("BreakDanceBattles.Data.Models.Category", b =>
+                {
+                    b.HasOne("BreakDanceBattles.Data.Models.Competition", null)
+                        .WithMany("Categories")
+                        .HasForeignKey("CompetitionId");
+                });
+
+            modelBuilder.Entity("BreakDanceBattles.Data.Models.Competition", b =>
+                {
+                    b.HasOne("BreakDanceBattles.Data.Models.ApplicationUser", "AddedByUser")
+                        .WithMany()
+                        .HasForeignKey("AddedByUserId");
+
+                    b.HasOne("BreakDanceBattles.Data.Models.Country", "Country")
+                        .WithMany("Competitions")
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("BreakDanceBattles.Data.Models.CompetitionCategory", b =>
+                {
+                    b.HasOne("BreakDanceBattles.Data.Models.Category", "Category")
+                        .WithMany("Competitions")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("BreakDanceBattles.Data.Models.Competition", "Competition")
+                        .WithMany()
+                        .HasForeignKey("CompetitionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("BreakDanceBattles.Data.Models.Image", b =>
+                {
+                    b.HasOne("BreakDanceBattles.Data.Models.ApplicationUser", "AddedByUser")
+                        .WithMany()
+                        .HasForeignKey("AddedByUserId");
+
+                    b.HasOne("BreakDanceBattles.Data.Models.Competition", "Competition")
+                        .WithOne("Images")
+                        .HasForeignKey("BreakDanceBattles.Data.Models.Image", "CompetitionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
