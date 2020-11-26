@@ -36,5 +36,15 @@ namespace BreakDanceBattles.Web.Controllers
             await this.competitionService.CreateAsync(input);
             return this.Redirect("/");
         }
+        public IActionResult All(int id)
+        {
+            var viewModel = new CompetitionListViewModel 
+            {
+                PageNumber = id,
+                Competitions = this.competitionService.GetAll(id,12),
+                
+            };
+            return this.View(viewModel);
+        }
     }
 }

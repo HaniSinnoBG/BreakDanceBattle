@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
+using BreakDanceBattles.Data.Models;
 
 namespace BreakDanceBattles.Web.ViewModels.Competitions
 {
@@ -16,6 +17,7 @@ namespace BreakDanceBattles.Web.ViewModels.Competitions
         public DateTime DateTime { get; set; }
 
         public int CountryId { get; set; }
+        public string  ImageUrl{ get; set; }
 
 
 

@@ -33,7 +33,7 @@ namespace BreakDanceBattles.Data.Models
 
         public int ImageId { get; set; }
 
-        public virtual Image Images { get; set; }
+        public virtual Image Image { get; set; }
 
 
 

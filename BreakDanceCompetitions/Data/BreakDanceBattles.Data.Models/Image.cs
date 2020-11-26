@@ -14,7 +14,7 @@ namespace BreakDanceBattles.Data.Models
         public int CompetitionId { get; set; }
 
         public virtual Competition Competition { get; set; }
-
+        public string RemoteImageUrl { get; set; }
         public string Extension { get; set; }
         public string AddedByUserId { get; set; }
 
