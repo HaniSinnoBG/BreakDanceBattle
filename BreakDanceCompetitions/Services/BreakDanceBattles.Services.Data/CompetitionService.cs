@@ -51,8 +51,15 @@ namespace BreakDanceBattles.Services.Data
             var competitions = this.competitionsRepository.AllAsNoTracking()
                 .OrderByDescending(x => x.Id)
                 .Skip(0).Take(itemsPerPage)
-                .To<CompetitionInListViewModel>()
-                .ToList();
+               .Select(x => new CompetitionInListViewModel 
+               {
+                Id = x.Id,
+                Name = x.Name,
+                CountryName = x.Country.Name,
+                CountryId = x.CountryId,
+                DateTime = x.DateTime.Date.ToString(),
+                RemoteImageUrl = x.Image.RemoteImageUrl,
+               }).ToList();
 
             return competitions;
         }

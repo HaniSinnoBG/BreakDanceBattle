@@ -9,10 +9,11 @@
 <div class="row">
 
 @foreach(var competition in this.Model.Competitions)
-    {
-
+{
+    
         <div class="media col-md-3">
-            <img src="@competition.RemoteImageUrl" width="100" class="mr-3 img-responsive" alt="...">
+            <img src="@competition.RemoteImageUrl" width="100" class="mr-3 img-responsive" alt="..." >
+            <br />  
             <div class="media-body">
                 <h5 class="mt-0">@competition.Name</h5>
                 <p>@competition.CountryName</p>
