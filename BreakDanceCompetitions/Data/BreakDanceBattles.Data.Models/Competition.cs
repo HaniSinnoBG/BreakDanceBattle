@@ -9,7 +9,7 @@ namespace BreakDanceBattles.Data.Models
     {
         public Competition()
         {
-            this.Categories = new HashSet<Category>();
+            this.Categories = new HashSet<CompetitionCategory>();
             this.JoinedUsers = new HashSet<ApplicationUser>();
         }
 
@@ -27,7 +27,7 @@ namespace BreakDanceBattles.Data.Models
 
         public virtual Country Country { get; set; }
 
-        public virtual ICollection<Category> Categories { get; set; }
+        public virtual ICollection<CompetitionCategory> Categories { get; set; }
 
         public virtual ICollection<ApplicationUser> JoinedUsers { get; set; }
 

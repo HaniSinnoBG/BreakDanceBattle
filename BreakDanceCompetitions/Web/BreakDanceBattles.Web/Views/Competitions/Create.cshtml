@@ -36,6 +36,10 @@
         <input asp-for="ImageUrl" class="form-control" />
         <span asp-validation-for="ImageUrl" class="text-danger"></span>
     </div>
+    <div id="CategoryContainer">
+        <label asp-for="Categories"></label>
+        <a class="btn btn-success" onclick="AddMoreCategories()">+</a>
+    </div>
 
     <input type="submit" class="btn btn-primary" />
 </form>
@@ -43,6 +47,12 @@
 
 @section Scripts {
     <script>
+        var CategoryIndex = 0;
+        function AddMoreCategories() {
+            $("#CategoryContainer").
+                append("<div class='form-control'>Name: <input type='text' name='Categories[" + CategoryIndex + "].CategoryName' /> </div>");
+            CategoryIndex++;
+        }
 
         $(function () {
             $('#datetimepicker1').datetimepicker();

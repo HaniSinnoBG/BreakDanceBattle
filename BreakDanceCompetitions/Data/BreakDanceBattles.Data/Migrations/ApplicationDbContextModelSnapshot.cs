@@ -151,9 +151,6 @@ namespace BreakDanceBattles.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CompetitionId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -170,8 +167,6 @@ namespace BreakDanceBattles.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CompetitionId");
 
                     b.HasIndex("IsDeleted");
 
@@ -453,13 +448,6 @@ namespace BreakDanceBattles.Data.Migrations
                         .HasForeignKey("CompetitionId");
                 });
 
-            modelBuilder.Entity("BreakDanceBattles.Data.Models.Category", b =>
-                {
-                    b.HasOne("BreakDanceBattles.Data.Models.Competition", null)
-                        .WithMany("Categories")
-                        .HasForeignKey("CompetitionId");
-                });
-
             modelBuilder.Entity("BreakDanceBattles.Data.Models.Competition", b =>
                 {
                     b.HasOne("BreakDanceBattles.Data.Models.ApplicationUser", "AddedByUser")
@@ -482,7 +470,7 @@ namespace BreakDanceBattles.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("BreakDanceBattles.Data.Models.Competition", "Competition")
-                        .WithMany()
+                        .WithMany("Categories")
                         .HasForeignKey("CompetitionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();

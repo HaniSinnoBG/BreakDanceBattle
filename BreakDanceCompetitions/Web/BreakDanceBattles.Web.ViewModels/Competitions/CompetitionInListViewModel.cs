@@ -8,7 +8,7 @@ using BreakDanceBattles.Services.Mapping;
 using System;
 using System.Collections.Generic;
 using System.Text;    
-    public class CompetitionInListViewModel :IMapFrom<Competition>
+    public class CompetitionInListViewModel 
     {
         public int Id { get; set; }
         public string RemoteImageUrl { get; set; }
@@ -16,7 +16,8 @@ using System.Text;
         public int CountryId { get; set; }
         public string CountryName { get; set; }
         public string DateTime { get; set; }
+        public string Categories { get; set; }
 
-       
+
     }
 }

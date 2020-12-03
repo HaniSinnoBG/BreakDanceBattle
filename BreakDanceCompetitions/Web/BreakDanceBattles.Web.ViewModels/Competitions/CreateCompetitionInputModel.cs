@@ -21,6 +21,7 @@ namespace BreakDanceBattles.Web.ViewModels.Competitions
 
 
 
+
         public IEnumerable<CompetitionCategoryInputModel> Categories { get; set; }
         public IEnumerable<KeyValuePair<string, string>> CountryItems { get; set; }
     }

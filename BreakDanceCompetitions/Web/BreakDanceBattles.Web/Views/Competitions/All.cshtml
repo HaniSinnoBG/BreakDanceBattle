@@ -15,7 +15,7 @@
             <img src="@competition.RemoteImageUrl" width="100" class="mr-3 img-responsive" alt="..." >
             <br />  
             <div class="media-body">
-                <h5 class="mt-0">@competition.Name</h5>
+                <h5 class="mt-0"><a asp-action="ById" asp-route-id="@competition.Id">@competition.Name</a></h5>
                 <p>@competition.CountryName</p>
                 <p>@competition.DateTime</p>
 

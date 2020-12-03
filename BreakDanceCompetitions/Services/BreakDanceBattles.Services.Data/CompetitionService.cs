@@ -15,16 +15,19 @@ namespace BreakDanceBattles.Services.Data
     {
         private readonly IDeletableEntityRepository<Competition> competitionsRepository;
         private readonly IRepository<Image> imagesRepository;
+        private readonly IDeletableEntityRepository<Category> categoriesRespository;
 
         public CompetitionService(
             IDeletableEntityRepository<Competition> competitionsRepository,
-            IRepository<Image> imagesRepository)
+            IRepository<Image> imagesRepository,
+            IDeletableEntityRepository<Category> categoriesRespository)
             {
                 this.competitionsRepository = competitionsRepository;
                 this.imagesRepository = imagesRepository;
+            this.categoriesRespository = categoriesRespository;
         }
 
-        public async Task CreateAsync(CreateCompetitionInputModel input)
+        public async Task CreateAsync(CreateCompetitionInputModel input, string userId)
         {
             var image = new Image
             {
@@ -39,7 +42,22 @@ namespace BreakDanceBattles.Services.Data
                 DateTime = input.DateTime,
                 CountryId = input.CountryId,
                 Image = image,
+                AddedByUserId = userId,
             };
+            foreach (var inputCategory in input.Categories)
+            {
+                var category = this.categoriesRespository.All()
+                    .FirstOrDefault(x => x.Name == inputCategory.CategoryName);
+                if (category==null)
+                {
+                    category = new Category { Name = inputCategory.CategoryName };
+                }
+                competition.Categories.Add(new CompetitionCategory
+                {
+                    Category = category,
+                    Competition = competition,
+                });
+            }
             image.CompetitionId = competition.Id;
             await this.imagesRepository.AddAsync(image);
             await this.competitionsRepository.AddAsync(competition);
@@ -53,6 +71,7 @@ namespace BreakDanceBattles.Services.Data
                 .Skip(0).Take(itemsPerPage)
                .Select(x => new CompetitionInListViewModel 
                {
+                  
                 Id = x.Id,
                 Name = x.Name,
                 CountryName = x.Country.Name,
@@ -62,6 +81,14 @@ namespace BreakDanceBattles.Services.Data
                }).ToList();
 
             return competitions;
+        }
+
+        public T GetById<T>(int id)
+        {
+            var competition = this.competitionsRepository.AllAsNoTracking()
+                 .Where(x => x.Id == id)
+                 .To<T>().FirstOrDefault();
+            return competition;
         }
     }
 }

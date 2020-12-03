@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BreakDanceBattles.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201124131205_initialMigrate")]
+    [Migration("20201130064935_initialMigrate")]
     partial class initialMigrate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -153,9 +153,6 @@ namespace BreakDanceBattles.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CompetitionId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -172,8 +169,6 @@ namespace BreakDanceBattles.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CompetitionId");
 
                     b.HasIndex("IsDeleted");
 
@@ -298,6 +293,9 @@ namespace BreakDanceBattles.Data.Migrations
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("RemoteImageUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -452,13 +450,6 @@ namespace BreakDanceBattles.Data.Migrations
                         .HasForeignKey("CompetitionId");
                 });
 
-            modelBuilder.Entity("BreakDanceBattles.Data.Models.Category", b =>
-                {
-                    b.HasOne("BreakDanceBattles.Data.Models.Competition", null)
-                        .WithMany("Categories")
-                        .HasForeignKey("CompetitionId");
-                });
-
             modelBuilder.Entity("BreakDanceBattles.Data.Models.Competition", b =>
                 {
                     b.HasOne("BreakDanceBattles.Data.Models.ApplicationUser", "AddedByUser")
@@ -481,7 +472,7 @@ namespace BreakDanceBattles.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("BreakDanceBattles.Data.Models.Competition", "Competition")
-                        .WithMany()
+                        .WithMany("Categories")
                         .HasForeignKey("CompetitionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -494,7 +485,7 @@ namespace BreakDanceBattles.Data.Migrations
                         .HasForeignKey("AddedByUserId");
 
                     b.HasOne("BreakDanceBattles.Data.Models.Competition", "Competition")
-                        .WithOne("Images")
+                        .WithOne("Image")
                         .HasForeignKey("BreakDanceBattles.Data.Models.Image", "CompetitionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();

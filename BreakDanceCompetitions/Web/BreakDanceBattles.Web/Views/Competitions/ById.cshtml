@@ -1,0 +1,27 @@
+﻿@model BreakDanceBattles.Web.ViewModels.Competitions.SingleCompetitionViewModel
+<!DOCTYPE html>
+
+@{ 
+    this.ViewData["Title"] = Model.Name;
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+
+    <div>
+        <h2>
+            @ViewData["Title"]
+        </h2>
+        <p> @Model.AddedByUserId</p>
+        <p> @Model.AddedByUserUserName</p>
+        <p> @String.Join(", ", Model.Categories)</p>
+        <p> @Model.CountryName</p>
+        <p> @Model.</p>
+        <p> @Model.Description</p>
+        <p> @Model.DateTime.Date</p>
+    </div>
+</body>
+</html>

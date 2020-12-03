@@ -11,7 +11,10 @@ namespace BreakDanceBattles.Data.Seeding
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
-    
+            if (dbContext.Countries.Any()) 
+            {
+                return;
+            }
             await dbContext.Countries.AddAsync(new Country { Name = "Afghanistan" });
             await dbContext.Countries.AddAsync(new Country { Name = "Albania" });
             await dbContext.Countries.AddAsync(new Country { Name = "Algeria" });
