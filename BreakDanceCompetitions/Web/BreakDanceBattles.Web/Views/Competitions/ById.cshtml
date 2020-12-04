@@ -10,18 +10,54 @@
     <title>@ViewData["Title"]</title>
 </head>
 <body>
+    @{var categories = ""; }
+    @foreach (var category in Model.Categories)
+    {
+        categories += category.CategoryName + " ";
+    }
+    
 
-    <div>
-        <h2>
-            @ViewData["Title"]
-        </h2>
-        <p> @Model.AddedByUserId</p>
-        <p> @Model.AddedByUserUserName</p>
-        <p> @String.Join(", ", Model.Categories)</p>
-        <p> @Model.CountryName</p>
-        <p> @Model.</p>
-        <p> @Model.Description</p>
-        <p> @Model.DateTime.Date</p>
+
+
+        <!-- Page Content -->
+    <div class="container">
+
+        <!-- Heading Row -->
+        <div class="row align-items-center my-5">
+            <div class="col-lg-7">
+                <img class="img-fluid rounded mb-4 mb-lg-0" src="@Model.ImageUrl" alt="">
+            </div>
+            <!-- /.col-lg-8 -->
+            <div class="col-lg-5">
+                <h1 class="font-weight-light">@Model.Name</h1>
+                <h2>@categories</h2>
+                <p>@Model.Description</p>
+            </div>
+            <!-- /.col-md-4 -->
+        </div>
+        <!-- /.row -->
+        <hr />  
+
+        <div class="">
+            <div class=" d-flex justify-content-between">
+                <div class="more_info">
+                    @Model.CountryName
+                </div>
+                <div class="more_info">
+                    @Model.DateTime
+                </div>
+                <div class="more_info">
+                    @Model.AddedByUserUserName
+                </div>
+            </div>
+        </div>
     </div>
-</body>
+        <!-- /.container -->
+
+        <!-- Bootstrap core JavaScript -->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+    </body>
 </html>

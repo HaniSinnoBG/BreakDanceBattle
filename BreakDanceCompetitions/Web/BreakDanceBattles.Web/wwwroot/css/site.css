@@ -54,3 +54,13 @@ body {
     height: 60px;
     line-height: 60px; /* Vertically center the text there */
 }
+.table_hover {
+    background-color: #FFFFFF;
+}
+
+.table_hover:hover {
+        background-color: red;
+    }
+.more_info {
+    font-size: 1.5rem;
+}

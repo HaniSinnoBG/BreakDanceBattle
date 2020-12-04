@@ -20,13 +20,14 @@ namespace BreakDanceBattles.Web.ViewModels.Competitions
         public string AddedByUserUserName { get; set; }
 
         public string CountryName { get; set; }
+        public string ImageUrl { get; set; }
 
         public virtual IEnumerable<CategoriesViewModel> Categories{ get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {
-            configuration.CreateMap<Competition, CompetitionInListViewModel>()
-                .ForMember(x => x.RemoteImageUrl, opt =>
+            configuration.CreateMap<Competition, SingleCompetitionViewModel>()
+                .ForMember(x => x.ImageUrl, opt =>
                  opt.MapFrom(x => x.Image.RemoteImageUrl));
         }
     }

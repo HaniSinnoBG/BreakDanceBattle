@@ -3,30 +3,47 @@
 
     this.ViewData["Title"] = "All Competitions, Page...";
 
-}      <h1> @this.ViewData["Title"]</h1>>
+}      <h1> @this.ViewData["Title"]</h1>
 
- <hr />
+<hr />
 <div class="row">
 
-@foreach(var competition in this.Model.Competitions)
-{
-    
-        <div class="media col-md-3">
-            <img src="@competition.RemoteImageUrl" width="100" class="mr-3 img-responsive" alt="..." >
-            <br />  
-            <div class="media-body">
-                <h5 class="mt-0"><a asp-action="ById" asp-route-id="@competition.Id">@competition.Name</a></h5>
-                <p>@competition.CountryName</p>
-                <p>@competition.DateTime</p>
 
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Name</th>
+                <th scope="col">Categories</th>
+                <th scope="col">Country</th>
+            </tr>
+        </thead>
+        @foreach (var competition in this.Model.Competitions)
+        {
+            var categories = ""; 
+            foreach (var category in competition.Categories)
+            {
+                categories += category.CategoryName + " ";
+            };
+            <div class="table_hoover">
+                <tbody>
+                    <tr class="table">
+                        <th scope="row">@competition.DateTime.Date</th>
+                        <td><a asp-action="ById" asp-route-id="@competition.Id">@competition.Name</a></td>
+                        <td>@categories</td>
+                        <td>@competition.CountryName</td>
+                    </tr>
+                </tbody>
             </div>
-        </div>
 
-    }
+        }
+    </table>
 </div>
-<hr/>
+
+<hr />
 <nav aria-label="...">
-    <ul class="pagination justify-content-center" >
+    <ul class="pagination justify-content-center">
         <li class="page-item disabled">
             <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
         </li>
