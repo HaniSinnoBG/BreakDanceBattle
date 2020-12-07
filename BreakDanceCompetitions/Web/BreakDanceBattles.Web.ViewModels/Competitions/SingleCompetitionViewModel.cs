@@ -9,6 +9,7 @@ namespace BreakDanceBattles.Web.ViewModels.Competitions
 {
     public class SingleCompetitionViewModel :IMapFrom<Competition>, IHaveCustomMappings
     {
+        public int Id { get; set; }
         public string Name { get; set; }
 
         public string Description { get; set; }

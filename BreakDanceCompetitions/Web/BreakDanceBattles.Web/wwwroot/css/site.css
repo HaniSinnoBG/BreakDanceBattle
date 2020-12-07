@@ -64,3 +64,45 @@ body {
 .more_info {
     font-size: 1.5rem;
 }
+.card-img-top {
+    object-fit: cover;
+}
+
+
+.hover-title {
+
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+.hover-image {
+    visibility: hidden;
+}
+
+body:not(.mobile) .hover-title:hover + .hover-image {
+    visibility: visible;
+    pointer-events: none;
+}
+
+.hover-image {
+    display: flex;
+    position: fixed;
+    top: 50%;
+    left: 0%;
+    transform: translate(-50%, 0%);
+    z-index: -1;
+    pointer-events: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* Change width and height to scale images */
+    object-fit: cover;
+}
+
+    .hover-image img {
+        max-width: 100% !important;
+        max-height: 100% !important;
+        width: auto !important;
+        height: auto !important;
+        margin-bottom: 0;
+    }

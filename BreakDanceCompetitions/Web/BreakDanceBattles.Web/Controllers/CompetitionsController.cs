@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using BreakDanceBattles.Data.Models;
 using BreakDanceBattles.Services.Data;
@@ -34,6 +35,7 @@ namespace BreakDanceBattles.Web.Controllers
             viewModel.CountryItems = this.countriesService.GetAllAsKeyValuePairs();
             return this.View(viewModel);
         }
+
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Create(CreateCompetitionInputModel input)
@@ -46,6 +48,26 @@ namespace BreakDanceBattles.Web.Controllers
             var user = await this.userManager.GetUserAsync(this.User);
             await this.competitionService.CreateAsync(input, user.Id);
             return this.Redirect("/");
+        }   
+        [Authorize]
+        public IActionResult Edit(int id)
+        {
+            var inputModel = this.competitionService.GetById<EditCompetitionInputModel>(id);
+            inputModel.CountryItems = this.countriesService.GetAllAsKeyValuePairs();
+            return this.View(inputModel);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Edit(int id, EditCompetitionInputModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                input.CountryItems = this.countriesService.GetAllAsKeyValuePairs();
+                return this.View(input);
+            }
+            await this.competitionService.UpdateAsync(id, input);
+            return this.RedirectToAction(nameof(this.ById), new { id });
         }
         public IActionResult All(int id)
         {
@@ -61,6 +83,17 @@ namespace BreakDanceBattles.Web.Controllers
         {
             var competition = this.competitionService.GetById<SingleCompetitionViewModel>(id);
             return this.View(competition);
+        }
+        public IActionResult MyCompetitions(int id) 
+        {        
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var viewModel = new CompetitionListViewModel
+            {
+                PageNumber = 1,
+                Competitions = this.competitionService.GetMyCompetitions(userId),
+            };
+ 
+            return this.View(viewModel);
         }
     }
 }

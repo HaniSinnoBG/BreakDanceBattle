@@ -1,11 +1,14 @@
 ﻿using BreakDanceBattles.Data.Common.Repositories;
 using BreakDanceBattles.Data.Models;
+using BreakDanceBattles.Data.Common.Models;
 using BreakDanceBattles.Services.Data.Contracts;
 using BreakDanceBattles.Services.Mapping;
 using BreakDanceBattles.Web.ViewModels.Competitions;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,15 +19,19 @@ namespace BreakDanceBattles.Services.Data
         private readonly IDeletableEntityRepository<Competition> competitionsRepository;
         private readonly IRepository<Image> imagesRepository;
         private readonly IDeletableEntityRepository<Category> categoriesRespository;
+        private readonly UserManager<ApplicationUser> userManager;
 
         public CompetitionService(
             IDeletableEntityRepository<Competition> competitionsRepository,
             IRepository<Image> imagesRepository,
-            IDeletableEntityRepository<Category> categoriesRespository)
+            IDeletableEntityRepository<Category> categoriesRespository,
+            UserManager<ApplicationUser> userManager
+            )
             {
                 this.competitionsRepository = competitionsRepository;
                 this.imagesRepository = imagesRepository;
             this.categoriesRespository = categoriesRespository;
+            this.userManager = userManager;
         }
 
         public async Task CreateAsync(CreateCompetitionInputModel input, string userId)
@@ -81,6 +88,27 @@ namespace BreakDanceBattles.Services.Data
                  .Where(x => x.Id == id)
                  .To<T>().FirstOrDefault();
             return competition;
+        }
+
+        public IEnumerable<CompetitionInListViewModel> GetMyCompetitions(string userId) 
+        {
+
+            var myCompetitions = this.competitionsRepository.AllAsNoTracking()
+                .Where(x => x.AddedByUserId == userId)
+                .OrderByDescending(x => x.Id)
+               .To<CompetitionInListViewModel>()
+               .ToList();
+            return myCompetitions;
+        }
+
+        public async Task UpdateAsync(int id, EditCompetitionInputModel input)
+        {
+            var competition = this.competitionsRepository.All().FirstOrDefault(x => x.Id == id);
+            competition.Name = input.Name;
+            competition.Description = input.Description;
+            competition.CountryId = input.CountryId;
+            competition.DateTime = input.DateTime;
+            await this.competitionsRepository.SaveChangesAsync();
         }
     }
 }

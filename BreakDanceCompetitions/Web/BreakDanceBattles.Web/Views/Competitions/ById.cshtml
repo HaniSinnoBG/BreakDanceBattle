@@ -15,28 +15,23 @@
     {
         categories += category.CategoryName + " ";
     }
-    
 
 
-
-        <!-- Page Content -->
     <div class="container">
-
-        <!-- Heading Row -->
         <div class="row align-items-center my-5">
             <div class="col-lg-7">
                 <img class="img-fluid rounded mb-4 mb-lg-0" src="@Model.ImageUrl" alt="">
             </div>
-            <!-- /.col-lg-8 -->
+
             <div class="col-lg-5">
                 <h1 class="font-weight-light">@Model.Name</h1>
                 <h2>@categories</h2>
                 <p>@Model.Description</p>
+                <a asp-controller="Competitions" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-secondary" style="background-color: red">Edit</a>
             </div>
-            <!-- /.col-md-4 -->
         </div>
-        <!-- /.row -->
-        <hr />  
+
+        <hr />
 
         <div class="">
             <div class=" d-flex justify-content-between">
@@ -52,12 +47,11 @@
             </div>
         </div>
     </div>
-        <!-- /.container -->
+    <!-- /.container -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-        <!-- Bootstrap core JavaScript -->
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-
-    </body>
+</body>
 </html>

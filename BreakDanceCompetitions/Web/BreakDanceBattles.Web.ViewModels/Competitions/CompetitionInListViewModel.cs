@@ -20,7 +20,7 @@ using System.Text;
 
         public void CreateMappings(IProfileExpression configuration)
         {
-            configuration.CreateMap<Competition, SingleCompetitionViewModel>()
+            configuration.CreateMap<Competition, CompetitionInListViewModel>()
                 .ForMember(x => x.ImageUrl, opt =>
                  opt.MapFrom(x => x.Image.RemoteImageUrl));
         }

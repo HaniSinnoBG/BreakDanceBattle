@@ -3,9 +3,10 @@
     this.ViewData["Title"] = "Add a new Competition";
     var countryItems = this.Model.CountryItems.Select(x => new SelectListItem(x.Value, x.Key));
 
-}
+}   
+ <h1>@this.ViewData["Title"]</h1>
 <form method="post" class="col-md-6 offset-md-3">
-    <h1>@this.ViewData["Title"]</h1>
+
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
         <label asp-for="Name"></label>
@@ -17,14 +18,11 @@
         <input asp-for="Description" class="form-control" />
         <span asp-validation-for="Description" class="text-danger"></span>
     </div>
+
     <div class="form-group">
         <label asp-for="DateTime"></label>
-        <div class='input-group date' id='datetimepicker1'>
-            <input asp-for="DateTime" type='text' class="form-control" />
-            <span class="input-group-addon">
-                <span asp-validation-for="Name" class="glyphicon glyphicon-calendar"></span>
-            </span>
-        </div>
+        <input asp-for="DateTime" class="form-control" value="@DateTime.Today" />
+        <span asp-validation-for="DateTime" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="CountryId"></label>

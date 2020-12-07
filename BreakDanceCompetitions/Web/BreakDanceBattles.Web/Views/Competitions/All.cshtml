@@ -2,10 +2,13 @@
 @{
 
     this.ViewData["Title"] = "All Competitions, Page...";
+    var campetitions = Model.Competitions.OrderBy(x => x.DateTime);
 
 }      <h1> @this.ViewData["Title"]</h1>
 
 <hr />
+
+
 <div class="row">
 
 
@@ -19,16 +22,26 @@
                 <th scope="col">Country</th>
             </tr>
         </thead>
-        @foreach (var competition in this.Model.Competitions)
+
+        @foreach (var competition in campetitions)
         {
-            var categories = ""; 
+            if (competition.DateTime.Date == DateTime.Today)
+            {
+                <p>today</p>
+            }
+            var categories = "";
             foreach (var category in competition.Categories)
             {
                 categories += category.CategoryName + " ";
             };
+            <div class="hover-title">Image Hover One</div>
+            <div class="hover-image"> <img src="@competition.ImageUrl" class="card-img-top" alt="..." style="width:17.5rem;height:10rem"></div>
+
             <div class="table_hoover">
                 <tbody>
                     <tr class="table">
+                        <div class="hover-title">Image Hover One</div>
+                        <div class="hover-image"> <img src="@competition.ImageUrl" class="card-img-top" alt="..." style="width:17.5rem;height:10rem"></div>
                         <th scope="row">@competition.DateTime.Date</th>
                         <td><a asp-action="ById" asp-route-id="@competition.Id">@competition.Name</a></td>
                         <td>@categories</td>

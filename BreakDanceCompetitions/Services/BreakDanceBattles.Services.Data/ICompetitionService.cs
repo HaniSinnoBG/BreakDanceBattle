@@ -8,5 +8,7 @@
         Task CreateAsync(CreateCompetitionInputModel input, string userId);
         IEnumerable<CompetitionInListViewModel> GetAll(int page, int itemsPerPage = 12);
         T GetById<T>(int id);
+        IEnumerable<CompetitionInListViewModel> GetMyCompetitions(string id);
+        Task UpdateAsync(int id, EditCompetitionInputModel input);
     }
 }
