@@ -10,5 +10,6 @@
         T GetById<T>(int id);
         IEnumerable<CompetitionInListViewModel> GetMyCompetitions(string id);
         Task UpdateAsync(int id, EditCompetitionInputModel input);
+        Task DeleteAsync(int id);
     }
 }

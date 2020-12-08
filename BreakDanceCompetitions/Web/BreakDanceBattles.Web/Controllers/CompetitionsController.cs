@@ -69,6 +69,12 @@ namespace BreakDanceBattles.Web.Controllers
             await this.competitionService.UpdateAsync(id, input);
             return this.RedirectToAction(nameof(this.ById), new { id });
         }
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id) 
+        {
+            await this.competitionService.DeleteAsync(id);
+            return this.Redirect("/Competitions/MyCompetitions");
+        }
         public IActionResult All(int id)
         {
             var viewModel = new CompetitionListViewModel 

@@ -110,5 +110,12 @@ namespace BreakDanceBattles.Services.Data
             competition.DateTime = input.DateTime;
             await this.competitionsRepository.SaveChangesAsync();
         }
+        public async Task DeleteAsync(int id)
+        {
+            var competition = this.competitionsRepository.All().FirstOrDefault(x => x.Id == id);
+            this.competitionsRepository.Delete(competition);
+            await this.competitionsRepository.SaveChangesAsync();
+        }
+
     }
 }

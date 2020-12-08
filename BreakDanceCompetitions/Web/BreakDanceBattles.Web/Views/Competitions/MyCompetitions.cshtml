@@ -13,11 +13,11 @@
         <div class="card" style="width: 17.5rem;">
             <img src="@competition.ImageUrl" class="card-img-top" alt="..." style="width:17.5rem;height:10rem">
             <div class="card-body">
-                <h5 class="card-title"><a asp-action="ById" asp-route-id="@competition.Id">@competition.Name</a></h5>
-                <p class="card-text">@categories</p>
-                <p class="card-text">@competition.CountryName</p>
-                <p class="card-text">@competition.DateTime</p>
-                <a asp-action="ById" asp-route-id="@competition.Id" class="btn btn-primary">More Info</a>
+                <h5 class="card-title d-flex justify-content-center"><a asp-action="ById" asp-route-id="@competition.Id">@competition.Name</a></h5>
+                <p class="card-text d-flex justify-content-center">@categories</p>
+                <p class="card-text d-flex justify-content-center ">@competition.CountryName</p>
+                <p class="card-text d-flex justify-content-center">@competition.DateTime</p>
+                <a asp-action="ById" asp-route-id="@competition.Id" class="btn btn-primary d-flex justify-content-center">More Info</a>
             </div>
         </div>
 

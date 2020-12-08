@@ -27,7 +27,14 @@
                 <h1 class="font-weight-light">@Model.Name</h1>
                 <h2>@categories</h2>
                 <p>@Model.Description</p>
-                <a asp-controller="Competitions" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-secondary" style="background-color: red">Edit</a>
+                <div class="actions d-flex justify-content-start">
+                    <a asp-controller="Competitions" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-secondary" >Edit</a>
+
+                        <form method="post" asp-action="Delete" id="deleteForm" asp-route-id="@Model.Id">
+                        </form>
+                        <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete</button>
+
+                </div>
             </div>
         </div>
 
@@ -55,3 +62,16 @@
 
 </body>
 </html>
+<div class="modal" tabindex="-1" role="dialog" id="deleteModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Do you want to delete "@Model.Name"?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="deleteForm.submit()">Yes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
