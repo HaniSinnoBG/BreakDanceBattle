@@ -117,5 +117,28 @@ namespace BreakDanceBattles.Services.Data
             await this.competitionsRepository.SaveChangesAsync();
         }
 
+        public IEnumerable<T> GetByCategories<T>(IEnumerable<int> categoryIds)
+        {
+            var selected = new List<T>();
+
+            foreach (var categoryId in categoryIds)
+            {
+                var query = this.competitionsRepository.All().AsQueryable();
+                query = query.Where(x => x.Categories.Any(i => i.CategoryId == categoryId));
+                var queried = query.To<T>();
+
+                foreach (var item in queried)
+                {
+                    if (!selected.Contains(item))
+                    {
+                        selected.Add(item);
+                    }
+
+                }
+            }
+
+            return selected;
+
+        }
     }
 }

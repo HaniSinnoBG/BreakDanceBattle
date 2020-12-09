@@ -11,5 +11,6 @@
         IEnumerable<CompetitionInListViewModel> GetMyCompetitions(string id);
         Task UpdateAsync(int id, EditCompetitionInputModel input);
         Task DeleteAsync(int id);
+        IEnumerable<T> GetByCategories<T>(IEnumerable<int> categoryIds);
     }
 }

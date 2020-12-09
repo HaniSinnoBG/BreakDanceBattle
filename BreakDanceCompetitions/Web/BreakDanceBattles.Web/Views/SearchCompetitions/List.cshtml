@@ -1,0 +1,30 @@
+﻿@model BreakDanceBattles.Web.ViewModels.SearchCompetitions.ListViewModel
+
+@{
+    ViewData["Title"] = "Results";
+    var competitions = Model.Competitions.OrderBy(x => x.DateTime);
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@foreach (var competition in competitions )
+{
+    var categories = "";
+    foreach (var category in competition.Categories)
+    {
+        categories += category.CategoryName + " ";
+    };
+
+    <div class="table_hoover">
+        <tbody>
+            <tr class="table">
+                <div class="hover-title">Image Hover One</div>
+                <div class="hover-image"> <img src="@competition.ImageUrl" class="card-img-top" alt="..." style="width:17.5rem;height:10rem"></div>
+                <th scope="row">@competition.DateTime.Day/@competition.DateTime.Month/@competition.DateTime.Year</th>
+                <td><a asp-action="ById" asp-route-id="@competition.Id">@competition.Name</a></td>
+                <td>@categories</td>
+                <td>@competition.CountryName</td>
+            </tr>
+        </tbody>
+    </div>
+}
