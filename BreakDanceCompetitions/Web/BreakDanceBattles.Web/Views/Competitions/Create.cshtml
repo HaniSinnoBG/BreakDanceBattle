@@ -5,42 +5,53 @@
 
 }   
  <h1>@this.ViewData["Title"]</h1>
-<form method="post" class="col-md-6 offset-md-3">
+ <form method="post" class="col-md-6 offset-md-3" enctype="multipart/form-data">
 
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="form-group">
-        <label asp-for="Name"></label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Description"></label>
-        <input asp-for="Description" class="form-control" />
-        <span asp-validation-for="Description" class="text-danger"></span>
-    </div>
+     <div asp-validation-summary="All" class="text-danger"></div>
+     <div class="form-group">
+         <label asp-for="Name"></label>
+         <input asp-for="Name" class="form-control" />
+         <span asp-validation-for="Name" class="text-danger"></span>
+     </div>
+     <div class="form-group">
+         <label asp-for="Description"></label>
+         <input asp-for="Description" class="form-control" />
+         <span asp-validation-for="Description" class="text-danger"></span>
+     </div>
 
-    <div class="form-group">
-        <label asp-for="DateTime"></label>
-        <input asp-for="DateTime" class="form-control" value="@DateTime.Today" />
-        <span asp-validation-for="DateTime" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="CountryId"></label>
-        <select asp-for="CountryId" class="form-control" asp-items="countryItems"></select>
-        <span asp-validation-for="CountryId" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ImageUrl"></label>
-        <input asp-for="ImageUrl" class="form-control" />
-        <span asp-validation-for="ImageUrl" class="text-danger"></span>
-    </div>
-    <div id="CategoryContainer">
-        <label asp-for="Categories"></label>
-        <a class="btn btn-success" onclick="AddMoreCategories()">+</a>
-    </div>
+     <div class="form-group">
+         <label asp-for="DateTime"></label>
+         <input asp-for="DateTime" class="form-control" value="@DateTime.Today" />
+         <span asp-validation-for="DateTime" class="text-danger"></span>
+     </div>
+     <div class="form-group">
+         <label asp-for="CountryId"></label>
+         <select asp-for="CountryId" class="form-control" asp-items="countryItems"></select>
+         <span asp-validation-for="CountryId" class="text-danger"></span>
+     </div>
 
-    <input type="submit" class="btn btn-primary" />
-</form>
+     <select id="CoverPhotoType" onchange="onSelectChange()">
+         <option value="1">Upload an Image</option>
+         <option value="2">Load from URL</option>
+     </select>
+     <div class="form-group">
+         <label asp-for="ImageUrl"></label>
+         <input asp-for="ImageUrl" class="form-control" type="url" id="enterUrl" placeholder="Enter in a URL." disabled="disabled" />
+         <span asp-validation-for="ImageUrl" class="text-danger"></span>
+     </div>
+     <div class="form-group">
+         <label asp-for="Image"></label>
+         <input asp-for="Image" class="form-control" type="file" id="fileBrowse" accept="image/*" />
+         <span asp-validation-for="Image" class="text-danger"></span>
+     </div>
+
+     <div id="CategoryContainer">
+         <label asp-for="Categories"></label>
+         <a class="btn btn-success" onclick="AddMoreCategories()">+</a>
+     </div>
+
+     <input type="submit" class="btn btn-primary" />
+ </form>
 
 
 @section Scripts {
@@ -55,6 +66,22 @@
         $(function () {
             $('#datetimepicker1').datetimepicker();
         });
+
+        function onSelectChange() {
+            var selectedValue = document.getElementById("CoverPhotoType").value;
+            selectedValue == "1" ? upload() : link();
+        }
+
+        function upload() {
+            document.getElementById("enterUrl").disabled = true;
+            document.getElementById("fileBrowse").disabled = false;
+
+        }
+
+        function link() {
+            document.getElementById("fileBrowse").disabled = true;
+            document.getElementById("enterUrl").disabled = false;
+        }
 
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

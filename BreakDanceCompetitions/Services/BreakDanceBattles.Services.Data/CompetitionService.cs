@@ -1,21 +1,25 @@
-﻿using BreakDanceBattles.Data.Common.Repositories;
-using BreakDanceBattles.Data.Models;
-using BreakDanceBattles.Data.Common.Models;
-using BreakDanceBattles.Services.Data.Contracts;
-using BreakDanceBattles.Services.Mapping;
-using BreakDanceBattles.Web.ViewModels.Competitions;
-using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BreakDanceBattles.Services.Data
+﻿namespace BreakDanceBattles.Services.Data
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Security.Claims;
+    using System.Text;
+    using System.Threading.Tasks;
+
+    using BreakDanceBattles.Data.Common.Models;
+    using BreakDanceBattles.Data.Common.Repositories;
+    using BreakDanceBattles.Data.Models;
+    using BreakDanceBattles.Services.Data.Contracts;
+    using BreakDanceBattles.Services.Mapping;
+    using BreakDanceBattles.Web.ViewModels.Competitions;
+    using Microsoft.AspNetCore.Identity;
+
     public class CompetitionService : ICompetitionService
     {
+
+        private readonly string[] AllowedExtensions = new[] { "jpg", "png", "gif" };
         private readonly IDeletableEntityRepository<Competition> competitionsRepository;
         private readonly IRepository<Image> imagesRepository;
         private readonly IDeletableEntityRepository<Category> categoriesRespository;
@@ -25,32 +29,26 @@ namespace BreakDanceBattles.Services.Data
             IDeletableEntityRepository<Competition> competitionsRepository,
             IRepository<Image> imagesRepository,
             IDeletableEntityRepository<Category> categoriesRespository,
-            UserManager<ApplicationUser> userManager
-            )
+            UserManager<ApplicationUser> userManager)
             {
                 this.competitionsRepository = competitionsRepository;
                 this.imagesRepository = imagesRepository;
             this.categoriesRespository = categoriesRespository;
             this.userManager = userManager;
+
         }
 
-        public async Task CreateAsync(CreateCompetitionInputModel input, string userId)
+        public async Task CreateAsync(CreateCompetitionInputModel input, string userId, string imagePath)
         {
-            var image = new Image
-            {
-                RemoteImageUrl = input.ImageUrl,
-                
-            };
-            
+
             var competition = new Competition
             {
                 Name = input.Name,
                 Description = input.Description,
                 DateTime = input.DateTime,
                 CountryId = input.CountryId,
-                Image = image,
                 AddedByUserId = userId,
-            };
+            };        
             foreach (var inputCategory in input.Categories)
             {
                 var category = this.categoriesRespository.All()
@@ -65,8 +63,39 @@ namespace BreakDanceBattles.Services.Data
                     Competition = competition,
                 });
             }
-            image.CompetitionId = competition.Id;
-            await this.imagesRepository.AddAsync(image);
+
+            Directory.CreateDirectory($"{imagePath}/competitions");
+            var dbImage = new Image();
+            
+            if (input.ImageUrl == null)
+            {
+                var extension = Path.GetExtension(input.Image.FileName);
+                extension = extension.TrimStart('.');
+
+                if (!this.AllowedExtensions.Any(x=> extension.EndsWith(x)))
+                {
+                    throw new Exception($"Invalid image extension {extension}");
+                }
+
+                dbImage.AddedByUserId = userId;
+                dbImage.Extension = extension;
+                competition.Image = dbImage;
+           
+                var physicalPath = $"{imagePath}/competitions/{dbImage.Id}.{extension}";
+                using (Stream fileStream = new FileStream(physicalPath, FileMode.Create))
+                {
+                    await input.Image.CopyToAsync(fileStream);
+                }
+            }
+            else
+            {
+                dbImage.AddedByUserId = userId;
+                dbImage.RemoteImageUrl = input.ImageUrl;
+                competition.Image = dbImage;
+            }
+
+            dbImage.CompetitionId = competition.Id;
+            await this.imagesRepository.AddAsync(dbImage);
             await this.competitionsRepository.AddAsync(competition);
             await this.competitionsRepository.SaveChangesAsync();
         }

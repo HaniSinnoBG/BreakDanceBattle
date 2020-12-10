@@ -8,6 +8,7 @@ using BreakDanceBattles.Services.Data;
 using BreakDanceBattles.Services.Data.Contracts;
 using BreakDanceBattles.Web.ViewModels.Competitions;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,15 +19,18 @@ namespace BreakDanceBattles.Web.Controllers
         private readonly ICompetitionService competitionService;
         private readonly ICountriesService countriesService;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IWebHostEnvironment environment;
 
         public CompetitionsController(
             ICompetitionService competitionService, 
             ICountriesService countriesService,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            IWebHostEnvironment environment)
         {
             this.competitionService = competitionService;
             this.countriesService = countriesService;
             this.userManager = userManager;
+            this.environment = environment;
         }
         [Authorize]
         public IActionResult Create()
@@ -46,7 +50,10 @@ namespace BreakDanceBattles.Web.Controllers
                 return this.View(input);
             }
             var user = await this.userManager.GetUserAsync(this.User);
-            await this.competitionService.CreateAsync(input, user.Id);
+
+                await this.competitionService.CreateAsync(input, user.Id, $"{this.environment.WebRootPath}/images");
+
+      
             return this.Redirect("/");
         }   
         [Authorize]

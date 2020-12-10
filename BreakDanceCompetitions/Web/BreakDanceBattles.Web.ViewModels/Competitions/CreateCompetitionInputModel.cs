@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
 using BreakDanceBattles.Data.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace BreakDanceBattles.Web.ViewModels.Competitions
 {
@@ -18,6 +19,7 @@ namespace BreakDanceBattles.Web.ViewModels.Competitions
 
         public int CountryId { get; set; }
         public string  ImageUrl{ get; set; }
+        public IFormFile Image { get; set; }
 
 
 

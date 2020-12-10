@@ -22,7 +22,10 @@ using System.Text;
         {
             configuration.CreateMap<Competition, CompetitionInListViewModel>()
                 .ForMember(x => x.ImageUrl, opt =>
-                 opt.MapFrom(x => x.Image.RemoteImageUrl));
+                 opt.MapFrom(x =>
+                 x.Image.RemoteImageUrl != null ?
+                 x.Image.RemoteImageUrl:
+                 "/images/competitions/" + x.Image.Id + "." + x.Image.Extension));
         }
     }
 }
