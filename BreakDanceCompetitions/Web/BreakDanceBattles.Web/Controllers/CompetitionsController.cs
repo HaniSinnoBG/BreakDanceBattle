@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using BreakDanceBattles.Data.Common.Repositories;
 using BreakDanceBattles.Data.Models;
 using BreakDanceBattles.Services.Data;
 using BreakDanceBattles.Services.Data.Contracts;
@@ -20,17 +21,20 @@ namespace BreakDanceBattles.Web.Controllers
         private readonly ICountriesService countriesService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IWebHostEnvironment environment;
+        private readonly IDeletableEntityRepository<Competition> competitionsRepository;
 
         public CompetitionsController(
             ICompetitionService competitionService, 
             ICountriesService countriesService,
             UserManager<ApplicationUser> userManager,
-            IWebHostEnvironment environment)
+            IWebHostEnvironment environment,
+            IDeletableEntityRepository<Competition> competitionsRepository)
         {
             this.competitionService = competitionService;
             this.countriesService = countriesService;
             this.userManager = userManager;
             this.environment = environment;
+            this.competitionsRepository = competitionsRepository;
         }
         [Authorize]
         public IActionResult Create()
@@ -59,28 +63,57 @@ namespace BreakDanceBattles.Web.Controllers
         [Authorize]
         public IActionResult Edit(int id)
         {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var inputModel = this.competitionService.GetById<EditCompetitionInputModel>(id);
             inputModel.CountryItems = this.countriesService.GetAllAsKeyValuePairs();
-            return this.View(inputModel);
+            if (inputModel.AddedByUserId == userId)
+            {
+                return this.View(inputModel);
+            }
+            else
+            {
+                return this.Redirect("/Competitions/All");
+            }
+
+
         }
 
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Edit(int id, EditCompetitionInputModel input)
         {
-            if (!this.ModelState.IsValid)
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (input.AddedByUserId == userId )
             {
-                input.CountryItems = this.countriesService.GetAllAsKeyValuePairs();
-                return this.View(input);
+                if (!this.ModelState.IsValid)
+                {
+                    input.CountryItems = this.countriesService.GetAllAsKeyValuePairs();
+                    return this.View(input);
+                }
+                await this.competitionService.UpdateAsync(id, input);
+                return this.RedirectToAction(nameof(this.ById), new { id });
             }
-            await this.competitionService.UpdateAsync(id, input);
-            return this.RedirectToAction(nameof(this.ById), new { id });
+            else
+            {
+                return this.Redirect("/Competitions/All");
+            }
+            
         }
         [HttpPost]
-        public async Task<IActionResult> Delete(int id) 
+        public async Task<IActionResult> Delete(int id)
         {
-            await this.competitionService.DeleteAsync(id);
-            return this.Redirect("/Competitions/MyCompetitions");
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var competition = this.competitionsRepository.All().FirstOrDefault(x => x.Id == id);
+            if (competition.AddedByUserId == userId)
+            {
+                await this.competitionService.DeleteAsync(id);
+                return this.Redirect("/Competitions/MyCompetitions");
+            }
+            else
+            {
+                return this.Redirect("/Competitions/MyCompetitions");
+            }
+
         }
         public IActionResult All()
         {

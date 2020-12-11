@@ -10,6 +10,7 @@ namespace BreakDanceBattles.Web.ViewModels.Competitions
     public class EditCompetitionInputModel: IMapFrom<Competition>
     {
         public int Id { get; set; }
+        public string AddedByUserId { get; set; }
         [Required]
         [MinLength(4)]
         public string Name { get; set; }
