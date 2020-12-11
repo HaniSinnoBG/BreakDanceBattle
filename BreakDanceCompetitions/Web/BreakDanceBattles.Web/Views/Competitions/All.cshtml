@@ -1,7 +1,7 @@
 ﻿@model BreakDanceBattles.Web.ViewModels.Competitions.CompetitionListViewModel
 @{
 
-    this.ViewData["Title"] = "All Competitions, Page...";
+    this.ViewData["Title"] = "All Competitions";
     var competitions = Model.Competitions.OrderBy(x => x.DateTime);
 
 }      <h1> @this.ViewData["Title"]</h1>
@@ -25,23 +25,17 @@
 
         @foreach (var competition in competitions)
         {
-            if (competition.DateTime.Date == DateTime.Today)
-            {
-                <p>today</p>
-            }
             var categories = "";
             foreach (var category in competition.Categories)
             {
                 categories += category.CategoryName + " ";
             };
 
-            <div class="table_hoover">
+            <div class="hover-title">
                 <tbody>
                     <tr class="table">
-                        <div class="hover-title">Image Hover One</div>
-                        <div class="hover-image"> <img src="@competition.ImageUrl" class="card-img-top" alt="..." style="width:17.5rem;height:10rem"></div>
-                        <th scope="row">@competition.DateTime.Day/@competition.DateTime.Month/@competition.DateTime.Year</th>
-                        <td><a asp-action="ById" asp-route-id="@competition.Id">@competition.Name</a></td>
+                        <td scope="row">@competition.DateTime.Day/@competition.DateTime.Month/@competition.DateTime.Year</td>
+                        <th><a asp-action="ById" asp-route-id="@competition.Id" class="text-dark"><div class="hover-title">@competition.Name</div></a></th>
                         <td>@categories</td>
                         <td>@competition.CountryName</td>
                     </tr>

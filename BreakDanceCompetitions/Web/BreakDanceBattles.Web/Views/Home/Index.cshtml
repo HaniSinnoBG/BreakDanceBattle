@@ -1,9 +1,34 @@
-﻿@using BreakDanceBattles.Common
+﻿@model BreakDanceBattles.Web.ViewModels.Competitions.HomeCompetitionsViewModel
 @{
     this.ViewData["Title"] = "Home Page";
+
+    var monday = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)DayOfWeek.Monday);
+    var sunday = monday.AddDays(6);
+
+
+}
+<h1>Battles this week</h1>
+@foreach (var competition in Model.Competitions)
+{
+    if (competition.DateTime >= monday && competition.DateTime <= sunday)
+    {
+        var categories = "";
+        foreach (var category in competition.Categories)
+        {
+            categories += category.CategoryName + " ";
+        };
+
+        <div class="card" style="width: 17.5rem;">
+            <img src="@competition.ImageUrl" class="card-img-top" alt="..." style="width:17.5rem;height:10rem">
+            <div class="card-body">
+                <h5 class="card-title d-flex justify-content-center"><a asp-action="ById" asp-route-id="@competition.Id">@competition.Name</a></h5>
+                <p class="card-text d-flex justify-content-center">@categories</p>
+                <p class="card-text d-flex justify-content-center ">@competition.CountryName</p>
+                <p class="card-text d-flex justify-content-center">@competition.DateTime</p>
+                <a asp-action="ById" asp-route-id="@competition.Id" class="btn btn-primary d-flex justify-content-center">More Info</a>
+            </div>
+        </div>
+    }
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+

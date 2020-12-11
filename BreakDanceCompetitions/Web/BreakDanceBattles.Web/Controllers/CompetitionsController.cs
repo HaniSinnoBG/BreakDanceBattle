@@ -82,12 +82,12 @@ namespace BreakDanceBattles.Web.Controllers
             await this.competitionService.DeleteAsync(id);
             return this.Redirect("/Competitions/MyCompetitions");
         }
-        public IActionResult All(int id)
+        public IActionResult All()
         {
             var viewModel = new CompetitionListViewModel 
             {
-                PageNumber = id,
-                Competitions = this.competitionService.GetAll(id,12),
+                PageNumber = 1,
+                Competitions = this.competitionService.GetAll(1,int.MaxValue),
                 
             };
             return this.View(viewModel);
@@ -108,5 +108,6 @@ namespace BreakDanceBattles.Web.Controllers
  
             return this.View(viewModel);
         }
+
     }
 }

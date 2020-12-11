@@ -1,28 +1,32 @@
 ﻿namespace BreakDanceBattles.Web.Controllers
 {
+    using System;
     using System.Diagnostics;
-
+    using System.Linq;
+    using System.Security.Claims;
+    using BreakDanceBattles.Services.Data.Contracts;
     using BreakDanceBattles.Web.ViewModels;
-
+    using BreakDanceBattles.Web.ViewModels.Competitions;
     using Microsoft.AspNetCore.Mvc;
 
     public class HomeController : BaseController
     {
+        private readonly ICompetitionService competitionService;
+
+        public HomeController(ICompetitionService competitionService)
+        {
+            this.competitionService = competitionService;
+        }
         public IActionResult Index()
         {
-            return this.View();
-        }
 
-        public IActionResult Privacy()
-        {
-            return this.View();
-        }
+            var viewModel = new HomeCompetitionsViewModel
+            {
+                Competitions = this.competitionService.GetAll(1, 100),
+            };
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return this.View(
-                new ErrorViewModel { RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier });
+            return this.View(viewModel);
         }
     }
+   
 }

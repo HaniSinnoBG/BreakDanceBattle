@@ -100,7 +100,7 @@
             await this.competitionsRepository.SaveChangesAsync();
         }
 
-        public IEnumerable<CompetitionInListViewModel> GetAll(int page, int itemsPerPage = 12)
+        public IEnumerable<CompetitionInListViewModel> GetAll(int page, int itemsPerPage)
         {
             var competitions = this.competitionsRepository.AllAsNoTracking()
                 .OrderByDescending(x => x.Id)
