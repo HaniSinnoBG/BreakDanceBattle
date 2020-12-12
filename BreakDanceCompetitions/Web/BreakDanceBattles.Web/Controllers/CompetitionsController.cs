@@ -141,6 +141,15 @@ namespace BreakDanceBattles.Web.Controllers
  
             return this.View(viewModel);
         }
+        [HttpPost]
+        public async Task<IActionResult> Join(int id)
+        {
+
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            await this.competitionService.JoinCompetition(id, userId);
+            return this.Redirect($"/Competitions/ById/{id}");
+
+        }
 
     }
 }

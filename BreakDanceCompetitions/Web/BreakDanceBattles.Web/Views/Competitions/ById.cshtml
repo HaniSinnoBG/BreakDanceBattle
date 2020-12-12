@@ -29,17 +29,23 @@
                 <h1 class="font-weight-light">@Model.Name</h1>
                 <h2>@categories</h2>
                 <p>@Model.Description</p>
-                @if (Model.AddedByUserId == userId)
-                {
-                    <div class="actions d-flex justify-content-start">
+                <p>Joined Users: @Model.JoinedUsers.Count()</p>  
+                
+                <div class="actions d-flex justify-content-start">
+                    @if (Model.AddedByUserId == userId)
+                    {
                         <a asp-controller="Competitions" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-secondary">Edit</a>
 
-                        <form method="post" asp-action="Delete" id="deleteForm" asp-route-id="@Model.Id">
-                        </form>
-                        <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete</button>
+                        <form method="post" asp-action="Delete" id="deleteForm" asp-route-id="@Model.Id"></form>
 
-                    </div>
-                }
+                        <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete</button>
+                    }
+
+                <form method="post" asp-action="Join" asp-route-id="@Model.Id">
+                    <button class="btn btn-success">Join</button>
+                </form>
+                </div>
+              
 
             </div>
         </div>

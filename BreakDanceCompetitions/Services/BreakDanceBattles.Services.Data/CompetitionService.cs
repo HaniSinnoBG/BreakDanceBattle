@@ -169,5 +169,12 @@
             return selected;
 
         }
+        public async Task JoinCompetition(int id, string userId )
+        {
+            var competition = this.competitionsRepository.All().FirstOrDefault(x => x.Id == id);
+            var user = await this.userManager.FindByIdAsync(userId);
+            competition.JoinedUsers.Add(user);
+            await this.competitionsRepository.SaveChangesAsync();
+        }
     }
 }
