@@ -181,21 +181,30 @@
             competition.JoinedUsers.Add(CompetitionUser);
             await this.competitionsRepository.SaveChangesAsync();
         }
-        public IEnumerable<CompetitionInListViewModel> JoinedCompetitions(string userId)
+        public IEnumerable<CompetitionInListViewModel> GetJoinedCompetitions(int page, int itemsPerPage, string userId)
         {
 
             var myCompetitions = this.competitionsRepository.AllAsNoTracking()
                 .Where(x => x.JoinedUsers.Any(i => i.UserId == userId))
                 .OrderByDescending(x => x.Id)
+                .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                 .To<CompetitionInListViewModel>()
                 .ToList();
             return myCompetitions;
+
         }
 
         public int GetCount(string userId)
         {
             return this.competitionsRepository.AllAsNoTracking()
                 .Where(x => x.AddedByUserId == userId)
+                .Count();
+        }
+
+        public int GetJoinedCount(string userId)
+        {
+            return this.competitionsRepository.AllAsNoTracking()
+                .Where(x => x.JoinedUsers.Any(i => i.UserId == userId))
                 .Count();
         }
     }

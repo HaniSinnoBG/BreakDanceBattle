@@ -1,7 +1,6 @@
 ﻿@model BreakDanceBattles.Web.ViewModels.Competitions.CompetitionListViewModel
 @{
 }
-<a class="nav-link text-dark" asp-area="" asp-controller="Competitions" asp-action="JoinedCompetitions">Joined Competitions</a>
 <h1>My Competitions</h1>
 <div class="row">
     @foreach (var competition in this.Model.Competitions)
@@ -24,7 +23,7 @@
 
     }
 </div>
-<hr />  
+<hr />
 
 <nav aria-label="...">
     <ul class="pagination justify-content-center">
