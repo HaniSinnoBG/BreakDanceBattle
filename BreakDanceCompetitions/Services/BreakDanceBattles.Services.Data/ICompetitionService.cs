@@ -13,5 +13,6 @@
         Task DeleteAsync(int id);
         IEnumerable<T> GetByCategories<T>(IEnumerable<int> categoryIds);
         Task JoinCompetition(int id, string userId);
+        int GetCount(string userId);
     }
 }

@@ -131,12 +131,15 @@ namespace BreakDanceBattles.Web.Controllers
             return this.View(competition);
         }
         public IActionResult MyCompetitions(int id = 1) 
-        {        
+        {
+            const int ItemsPerPage = 2;
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var viewModel = new CompetitionListViewModel
             {
+                ItemsPerPage = ItemsPerPage,
                 PageNumber = id,
-                Competitions = this.competitionService.GetMyCompetitions(id, 1, userId),
+                CompetitionsCount = this.competitionService.GetCount(userId),
+                Competitions = this.competitionService.GetMyCompetitions(id, ItemsPerPage, userId),
             };
  
             return this.View(viewModel);

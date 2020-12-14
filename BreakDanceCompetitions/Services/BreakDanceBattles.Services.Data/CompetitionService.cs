@@ -191,5 +191,12 @@
                 .ToList();
             return myCompetitions;
         }
+
+        public int GetCount(string userId)
+        {
+            return this.competitionsRepository.AllAsNoTracking()
+                .Where(x => x.AddedByUserId == userId)
+                .Count();
+        }
     }
 }

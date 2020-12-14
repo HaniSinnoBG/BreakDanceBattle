@@ -8,6 +8,21 @@
 
 }
 <h1>Battles this week</h1>
+
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+
+    <div class="carousel-inner">
+        @foreach (var competition in Model.Competitions)
+        {
+            <div class="carousel-item active">
+                <img class="d-block w-100" src="@competition.ImageUrl" alt="First slide">
+            </div>
+        }
+
+    </div>
+</div>
+
+
 @foreach (var competition in Model.Competitions)
 {
     if (competition.DateTime >= monday && competition.DateTime <= sunday)
