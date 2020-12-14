@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BreakDanceBattles.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201130064935_initialMigrate")]
-    partial class initialMigrate
+    [Migration("20201213111906_User id fix")]
+    partial class Useridfix
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -68,9 +68,6 @@ namespace BreakDanceBattles.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CompetitionId")
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -130,8 +127,6 @@ namespace BreakDanceBattles.Data.Migrations
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CompetitionId");
 
                     b.HasIndex("IsDeleted");
 
@@ -243,6 +238,28 @@ namespace BreakDanceBattles.Data.Migrations
                     b.HasIndex("CompetitionId");
 
                     b.ToTable("CompetitionCategories");
+                });
+
+            modelBuilder.Entity("BreakDanceBattles.Data.Models.CompetitionUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CompetitionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompetitionId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CompetitionUsers");
                 });
 
             modelBuilder.Entity("BreakDanceBattles.Data.Models.Country", b =>
@@ -443,13 +460,6 @@ namespace BreakDanceBattles.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("BreakDanceBattles.Data.Models.ApplicationUser", b =>
-                {
-                    b.HasOne("BreakDanceBattles.Data.Models.Competition", null)
-                        .WithMany("JoinedUsers")
-                        .HasForeignKey("CompetitionId");
-                });
-
             modelBuilder.Entity("BreakDanceBattles.Data.Models.Competition", b =>
                 {
                     b.HasOne("BreakDanceBattles.Data.Models.ApplicationUser", "AddedByUser")
@@ -476,6 +486,19 @@ namespace BreakDanceBattles.Data.Migrations
                         .HasForeignKey("CompetitionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("BreakDanceBattles.Data.Models.CompetitionUser", b =>
+                {
+                    b.HasOne("BreakDanceBattles.Data.Models.Competition", "Competition")
+                        .WithMany("JoinedUsers")
+                        .HasForeignKey("CompetitionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("BreakDanceBattles.Data.Models.ApplicationUser", "User")
+                        .WithMany("Competitions")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("BreakDanceBattles.Data.Models.Image", b =>

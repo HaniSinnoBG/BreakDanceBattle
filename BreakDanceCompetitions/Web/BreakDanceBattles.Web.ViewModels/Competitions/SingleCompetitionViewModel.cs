@@ -25,7 +25,7 @@ namespace BreakDanceBattles.Web.ViewModels.Competitions
 
         public virtual IEnumerable<CategoriesViewModel> Categories{ get; set; }
 
-        public virtual ICollection<ApplicationUser> JoinedUsers { get; set; }
+        public virtual IEnumerable<UsersViewModel> JoinedUsers { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {

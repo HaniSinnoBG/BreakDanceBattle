@@ -130,13 +130,13 @@ namespace BreakDanceBattles.Web.Controllers
             var competition = this.competitionService.GetById<SingleCompetitionViewModel>(id);
             return this.View(competition);
         }
-        public IActionResult MyCompetitions(int id) 
+        public IActionResult MyCompetitions(int id = 1) 
         {        
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var viewModel = new CompetitionListViewModel
             {
-                PageNumber = 1,
-                Competitions = this.competitionService.GetMyCompetitions(userId),
+                PageNumber = id,
+                Competitions = this.competitionService.GetMyCompetitions(id, 1, userId),
             };
  
             return this.View(viewModel);

@@ -119,12 +119,13 @@
             return competition;
         }
 
-        public IEnumerable<CompetitionInListViewModel> GetMyCompetitions(string userId) 
+        public IEnumerable<CompetitionInListViewModel> GetMyCompetitions(int page, int itemsPerPage, string userId) 
         {
 
             var myCompetitions = this.competitionsRepository.AllAsNoTracking()
                 .Where(x => x.AddedByUserId == userId)
                 .OrderByDescending(x => x.Id)
+                .Skip((page-1) * itemsPerPage).Take(itemsPerPage)
                .To<CompetitionInListViewModel>()
                .ToList();
             return myCompetitions;
@@ -173,8 +174,22 @@
         {
             var competition = this.competitionsRepository.All().FirstOrDefault(x => x.Id == id);
             var user = await this.userManager.FindByIdAsync(userId);
-            competition.JoinedUsers.Add(user);
+            var CompetitionUser = new CompetitionUser();
+            CompetitionUser.Competition = competition;
+            CompetitionUser.User = user;
+
+            competition.JoinedUsers.Add(CompetitionUser);
             await this.competitionsRepository.SaveChangesAsync();
+        }
+        public IEnumerable<CompetitionInListViewModel> JoinedCompetitions(string userId)
+        {
+
+            var myCompetitions = this.competitionsRepository.AllAsNoTracking()
+                .Where(x => x.JoinedUsers.Any(i => i.UserId == userId))
+                .OrderByDescending(x => x.Id)
+                .To<CompetitionInListViewModel>()
+                .ToList();
+            return myCompetitions;
         }
     }
 }

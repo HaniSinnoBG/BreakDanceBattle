@@ -13,11 +13,19 @@
 </head>
 <body>
     @{var categories = ""; }
+    @{var joinedUsers = ""; }
+
     @foreach (var category in Model.Categories)
     {
         categories += category.CategoryName + " ";
     }
-
+    @foreach (var user in Model.JoinedUsers)
+    {
+        var username = user.UserUserName;
+        <p>@username</p>
+        joinedUsers += user.UserId + "" + username + "";
+    }
+    <p>@joinedUsers</p>
 
     <div class="container">
         <div class="row align-items-center my-5">
@@ -29,8 +37,8 @@
                 <h1 class="font-weight-light">@Model.Name</h1>
                 <h2>@categories</h2>
                 <p>@Model.Description</p>
-                <p>Joined Users: @Model.JoinedUsers.Count()</p>  
-                
+                <p>Joined Users: @Model.JoinedUsers.Count()</p>
+
                 <div class="actions d-flex justify-content-start">
                     @if (Model.AddedByUserId == userId)
                     {
@@ -41,11 +49,11 @@
                         <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete</button>
                     }
 
-                <form method="post" asp-action="Join" asp-route-id="@Model.Id">
-                    <button class="btn btn-success">Join</button>
-                </form>
+                    <form method="post" asp-action="Join" asp-route-id="@Model.Id">
+                        <button class="btn btn-success">Join</button>
+                    </form>
                 </div>
-              
+
 
             </div>
         </div>
