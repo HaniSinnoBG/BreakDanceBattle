@@ -24,18 +24,20 @@
         private readonly IRepository<Image> imagesRepository;
         private readonly IDeletableEntityRepository<Category> categoriesRespository;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IRepository<CompetitionUser> joinedRepository;
 
         public CompetitionService(
             IDeletableEntityRepository<Competition> competitionsRepository,
             IRepository<Image> imagesRepository,
             IDeletableEntityRepository<Category> categoriesRespository,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            IRepository<CompetitionUser> joinedRepository)
             {
                 this.competitionsRepository = competitionsRepository;
                 this.imagesRepository = imagesRepository;
             this.categoriesRespository = categoriesRespository;
             this.userManager = userManager;
-
+            this.joinedRepository = joinedRepository;
         }
 
         public async Task CreateAsync(CreateCompetitionInputModel input, string userId, string imagePath)
@@ -178,8 +180,12 @@
             CompetitionUser.Competition = competition;
             CompetitionUser.User = user;
 
+            if (!joinedRepository.All().Any(x => x.UserId == userId && x.CompetitionId == id))
+            {
             competition.JoinedUsers.Add(CompetitionUser);
             await this.competitionsRepository.SaveChangesAsync();
+            }
+
         }
         public IEnumerable<CompetitionInListViewModel> GetJoinedCompetitions(int page, int itemsPerPage, string userId)
         {
