@@ -1,7 +1,7 @@
 ﻿@model BreakDanceBattles.Web.ViewModels.Competitions.CompetitionListViewModel
 @{
 }
-<a class="nav-link text-dark" asp-area="" asp-controller="Competitions" asp-action="JoinedCompetitions">Joined Competitions</a>
+<a class="btn btn-primary" asp-area="" asp-controller="Competitions" asp-action="JoinedCompetitions"> See Joined Competitions</a>
 <h1>My Competitions</h1>
 <div class="row">
     @foreach (var competition in this.Model.Competitions)

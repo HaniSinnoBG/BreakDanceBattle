@@ -87,8 +87,8 @@ body:not(.mobile) .hover-title:hover + .hover-image {
 .hover-image {
     display: flex;
     position: fixed;
-    top: 50%;
-    left: 0%;
+    top: 5rem;
+    left: 65%;
     transform: translate(-50%, 0%);
     z-index: -1;
     pointer-events: none;
@@ -100,9 +100,15 @@ body:not(.mobile) .hover-title:hover + .hover-image {
 }
 
     .hover-image img {
-        max-width: 100% !important;
-        max-height: 100% !important;
-        width: auto !important;
-        height: auto !important;
+
         margin-bottom: 0;
     }
+.checkbox_container {
+    padding-bottom: 0.7rem;
+    padding-top: 0.7rem;
+    padding-left: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 1px;
+    height: 100px;
+    overflow-y: scroll;

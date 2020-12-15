@@ -1,6 +1,7 @@
 ﻿@model BreakDanceBattles.Web.ViewModels.Competitions.CompetitionListViewModel
 @{
 }
+<a class="btn btn-primary" asp-area="" asp-controller="Competitions" asp-action="MyCompetitions"> See Your Competitions</a>
 <h1>My Competitions</h1>
 <div class="row">
     @foreach (var competition in this.Model.Competitions)
