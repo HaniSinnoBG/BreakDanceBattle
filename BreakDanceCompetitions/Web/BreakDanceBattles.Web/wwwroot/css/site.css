@@ -12,6 +12,29 @@ a.navbar-brand {
 html {
     font-size: 14px;
 }
+body {
+    background: #3aafa9;
+}
+.navbar {
+    background-color: #061114 !important;
+    color: #feffff;
+}
+a.nav-link {
+    color: #feffff;
+}
+button.nav-link {
+    color: #feffff !important;
+}
+a.navbar-brand {
+    color: #feffff;
+}
+.card-body {
+    background-color: #Def2f1;
+}
+.btn {
+    background-color: #3aafa9;
+}
+
 @media (min-width: 768px) {
     html {
         font-size: 16px;

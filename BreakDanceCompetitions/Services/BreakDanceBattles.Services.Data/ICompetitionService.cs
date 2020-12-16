@@ -16,5 +16,8 @@
         Task JoinCompetition(int id, string userId);
         int GetCount(string userId); 
         int GetJoinedCount(string userId);
+        int CountAll();
+        int CountAllUpcoming();
+        int BattlesToday();
     }
 }

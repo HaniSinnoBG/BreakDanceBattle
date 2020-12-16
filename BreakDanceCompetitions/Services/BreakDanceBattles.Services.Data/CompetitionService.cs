@@ -213,5 +213,24 @@
                 .Where(x => x.JoinedUsers.Any(i => i.UserId == userId))
                 .Count();
         }
+
+        public int CountAll()
+        {
+            return this.competitionsRepository.AllAsNoTracking().Count();
+        }
+
+        public int CountAllUpcoming()
+        {
+            return this.competitionsRepository.AllAsNoTracking()
+                .Where(x => x.DateTime >= DateTime.Today)
+                .Count();
+        }
+
+        public int BattlesToday()
+        {
+            return this.competitionsRepository.AllAsNoTracking()
+                .Where(x => x.DateTime.Date == DateTime.Today.Date)
+                .Count();
+        }
     }
 }

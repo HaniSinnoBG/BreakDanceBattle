@@ -23,10 +23,14 @@
             var viewModel = new HomeCompetitionsViewModel
             {
                 Competitions = this.competitionService.GetAll(1, 100),
+                UpcomingCompetitions = this.competitionService.CountAllUpcoming(),
+                CompetitionsToday = this.competitionService.BattlesToday(),
+                CompetitionsCount = this.competitionService.CountAll(),
             };
 
             return this.View(viewModel);
         }
+        
     }
    
 }
