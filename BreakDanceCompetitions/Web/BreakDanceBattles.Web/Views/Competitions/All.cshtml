@@ -4,46 +4,51 @@
     this.ViewData["Title"] = "All Competitions";
     var competitions = Model.Competitions.OrderBy(x => x.DateTime);
 
-}      <h1> @this.ViewData["Title"]</h1>
+}    
+ <div class="p-5 rounded" style="background-color: #Def2f1">
+    <h1> @this.ViewData["Title"]</h1>
 
-<hr />
-
-
-<div class="row">
-
+    <hr />
 
 
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th scope="col">Date</th>
-                <th scope="col">Name</th>
-                <th scope="col">Categories</th>
-                <th scope="col">Country</th>
-            </tr>
-        </thead>
+    <div class="row">
 
-        @foreach (var competition in competitions)
-        {
-            var categories = "";
-            foreach (var category in competition.Categories)
+
+
+        <table class="table rounded table-hover table-striped " style="background-color:#061114; color: white">
+
+            <thead>
+                <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Categories</th>
+                    <th scope="col">Country</th>
+                </tr>
+            </thead>
+
+            @foreach (var competition in competitions)
             {
-                categories += category.CategoryName + " ";
-            };
+                var categories = "";
+                foreach (var category in competition.Categories)
+                {
+                    categories += category.CategoryName + " ";
+                };
 
-            <div class="hover-title">
-                <tbody>
-                    <tr class="table">
-                        <td scope="row">@competition.DateTime.Day/@competition.DateTime.Month/@competition.DateTime.Year</td>
-                        <th><a asp-action="ById" asp-route-id="@competition.Id" class="text-dark"><div class="hover-title">@competition.Name</div></a></th>
-                        <td>@categories</td>
-                        <td>@competition.CountryName</td>
-                    </tr>
-                </tbody>
-            </div>
+                <div class="hover-title">
+                    <tbody>
+                        <tr class="table">
+                            <td scope="row" class="text-light">@competition.DateTime.Day/@competition.DateTime.Month/@competition.DateTime.Year</td>
+                            <th><a asp-action="ById" asp-route-id="@competition.Id" class="text-light"><div class="hover-title">@competition.Name</div></a></th>
+                            <td class="text-light">@categories</td>
+                            <td class="text-light">@competition.CountryName</td>
+                        </tr>
+                    </tbody>
+                </div>
 
-        }
-    </table>
+            }
+        </table>
+    </div>
 </div>
+
 
 <hr />

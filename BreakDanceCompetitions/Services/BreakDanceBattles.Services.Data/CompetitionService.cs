@@ -43,6 +43,7 @@
         public async Task CreateAsync(CreateCompetitionInputModel input, string userId, string imagePath)
         {
 
+
             var competition = new Competition
             {
                 Name = input.Name,
