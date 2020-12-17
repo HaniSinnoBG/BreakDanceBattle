@@ -1,8 +1,9 @@
 ﻿@model BreakDanceBattles.Web.ViewModels.Competitions.CompetitionListViewModel
 @{
 }
+
 <a class="btn btn-primary" asp-area="" asp-controller="Competitions" asp-action="MyCompetitions"> See Your Competitions</a>
-<h1>My Competitions</h1>
+<h1 class="d-flex justify-content-center">My Competitions</h1>
 <div class="row">
     @foreach (var competition in this.Model.Competitions)
     {
@@ -11,8 +12,8 @@
         {
             categories += category.CategoryName + " ";
         };
-        <div class="card" style="width: 17.5rem;">
-            <img src="@competition.ImageUrl" class="card-img-top" alt="..." style="width:17.5rem;height:10rem">
+        <div class="col col-md-auto card p-1 m-1" style="width: 17rem;">
+            <img src="@competition.ImageUrl" class="card-img-top" alt="..." style="width:auto;height:10rem">
             <div class="card-body">
                 <h5 class="card-title d-flex justify-content-center"><a asp-action="ById" asp-route-id="@competition.Id">@competition.Name</a></h5>
                 <p class="card-text d-flex justify-content-center">@categories</p>

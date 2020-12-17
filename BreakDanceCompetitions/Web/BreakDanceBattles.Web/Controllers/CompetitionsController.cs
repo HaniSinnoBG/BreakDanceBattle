@@ -54,8 +54,17 @@ namespace BreakDanceBattles.Web.Controllers
                 return this.View(input);
             }
             var user = await this.userManager.GetUserAsync(this.User);
-
+            try
+            {
                 await this.competitionService.CreateAsync(input, user.Id, $"{this.environment.WebRootPath}/images");
+            }
+            catch (Exception)
+            {
+                var viewModel = new CreateCompetitionInputModel();
+                viewModel.CountryItems = this.countriesService.GetAllAsKeyValuePairs();
+                return this.View(viewModel);
+            }
+                
 
       
             return this.Redirect("/");

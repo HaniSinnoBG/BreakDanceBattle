@@ -5,7 +5,7 @@
     ViewData["Title"] = "Results";
     var model = Model.Competitions.OrderBy(x => x.DateTime);
     var competitionIds = new List<int>();
-    var competitions =new List<CompetitionInListViewModel>();
+    var competitions = new List<CompetitionInListViewModel>();
     foreach (var competition in model)
     {
         if (!competitionIds.Contains(competition.Id))
@@ -18,26 +18,31 @@
 
 }
 
-<h1>@ViewData["Title"]</h1>
+<body style="background-color: #Def2f1">
 
-@foreach (var competition in competitions )
-{
-    var categories = "";
-    foreach (var category in competition.Categories)
+    <h1>@ViewData["Title"]</h1>
+
+    @foreach (var competition in competitions)
     {
-        categories += category.CategoryName + " ";
-    };
+        var categories = "";
+        foreach (var category in competition.Categories)
+        {
+            categories += category.CategoryName + " ";
+        };
 
-    <div class="table_hoover">
-        <tbody>
-            <tr class="table">
-                <div class="hover-title"><a asp-controller="Competitions" asp-action="ById" asp-route-id="@competition.Id">@competition.Name</a></div>
-                <div class="hover-image"> <img src="@competition.ImageUrl" class="card-img-top" alt="..." style="width:30rem;height:30rem"></div>
-                <th scope="row">@competition.DateTime.Day/@competition.DateTime.Month/@competition.DateTime.Year</th>
-                <td></td>
-                <td>@categories</td>
-                <td>@competition.CountryName</td>
-            </tr>
-        </tbody>
-    </div>
-}
+        <div class="table_hoover">
+            <tbody>
+                <tr class="table">
+                    <div class="hover-title"><a asp-controller="Competitions" asp-action="ById" asp-route-id="@competition.Id">@competition.Name</a></div>
+                    <div class="hover-image"> <img src="@competition.ImageUrl" class="card-img-top" alt="..." style="width:30rem;height:30rem"></div>
+                    <th scope="row">@competition.DateTime.Day/@competition.DateTime.Month/@competition.DateTime.Year</th>
+                    <td></td>
+                    <td>@categories</td>
+                    <td>@competition.CountryName</td>
+                </tr>
+            </tbody>
+        </div>
+
+    }
+
+</body>

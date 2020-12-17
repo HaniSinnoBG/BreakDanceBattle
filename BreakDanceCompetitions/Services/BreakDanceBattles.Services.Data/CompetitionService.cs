@@ -20,6 +20,7 @@
     {
 
         private readonly string[] AllowedExtensions = new[] { "jpg", "png", "gif" };
+
         private readonly IDeletableEntityRepository<Competition> competitionsRepository;
         private readonly IRepository<Image> imagesRepository;
         private readonly IDeletableEntityRepository<Category> categoriesRespository;
@@ -35,9 +36,9 @@
             {
                 this.competitionsRepository = competitionsRepository;
                 this.imagesRepository = imagesRepository;
-            this.categoriesRespository = categoriesRespository;
-            this.userManager = userManager;
-            this.joinedRepository = joinedRepository;
+                this.categoriesRespository = categoriesRespository;
+                this.userManager = userManager;
+                this.joinedRepository = joinedRepository;
         }
 
         public async Task CreateAsync(CreateCompetitionInputModel input, string userId, string imagePath)
@@ -52,6 +53,7 @@
                 CountryId = input.CountryId,
                 AddedByUserId = userId,
             };        
+
             foreach (var inputCategory in input.Categories)
             {
                 var category = this.categoriesRespository.All()
@@ -72,6 +74,11 @@
             
             if (input.ImageUrl == null)
             {
+                if (input.Image == null)
+                {
+                    throw new Exception($"No Image Uploaded");
+                }
+
                 var extension = Path.GetExtension(input.Image.FileName);
                 extension = extension.TrimStart('.');
 
@@ -82,7 +89,6 @@
 
                 dbImage.AddedByUserId = userId;
                 dbImage.Extension = extension;
-                competition.Image = dbImage;
            
                 var physicalPath = $"{imagePath}/competitions/{dbImage.Id}.{extension}";
                 using (Stream fileStream = new FileStream(physicalPath, FileMode.Create))
@@ -94,11 +100,10 @@
             {
                 dbImage.AddedByUserId = userId;
                 dbImage.RemoteImageUrl = input.ImageUrl;
-                competition.Image = dbImage;
             }
 
-            dbImage.CompetitionId = competition.Id;
-            await this.imagesRepository.AddAsync(dbImage);
+            competition.Image = dbImage;
+
             await this.competitionsRepository.AddAsync(competition);
             await this.competitionsRepository.SaveChangesAsync();
         }
@@ -108,8 +113,8 @@
             var competitions = this.competitionsRepository.AllAsNoTracking()
                 .OrderByDescending(x => x.Id)
                 .Skip(0).Take(itemsPerPage)
-               .To<CompetitionInListViewModel>()
-               .ToList();
+                .To<CompetitionInListViewModel>()
+                .ToList();
 
             return competitions;
         }
@@ -129,8 +134,9 @@
                 .Where(x => x.AddedByUserId == userId)
                 .OrderByDescending(x => x.Id)
                 .Skip((page-1) * itemsPerPage).Take(itemsPerPage)
-               .To<CompetitionInListViewModel>()
-               .ToList();
+                .To<CompetitionInListViewModel>()
+                .ToList();
+
             return myCompetitions;
         }
 
