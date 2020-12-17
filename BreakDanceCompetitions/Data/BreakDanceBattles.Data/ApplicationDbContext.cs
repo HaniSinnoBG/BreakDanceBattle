@@ -30,6 +30,7 @@
         public DbSet<Image> Images { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<Setting> Settings { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 

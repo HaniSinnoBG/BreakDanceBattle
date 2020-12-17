@@ -13,7 +13,7 @@ using Xunit;
 
 namespace BreakDanceBattles.Services.Data.Tests
 {
-    class ControllerServiceTests
+   public  class ControllerServiceTests
     {
         private readonly ICompetitionService competitionService;
         private IDeletableEntityRepository<Competition> competitionsRepository;
@@ -58,7 +58,7 @@ namespace BreakDanceBattles.Services.Data.Tests
             var MockRepo = new Mock<IDeletableEntityRepository<Competition>>();
             MockRepo.Setup(x => x.AllAsNoTracking()).Returns(list.AsQueryable());
 
-            var service = new CompetitionService(MockRepo.Object, this.competitionsRepository);
+            //var service = new CompetitionService(MockRepo.Object, this.competitionsRepository);
         }
     }
 }

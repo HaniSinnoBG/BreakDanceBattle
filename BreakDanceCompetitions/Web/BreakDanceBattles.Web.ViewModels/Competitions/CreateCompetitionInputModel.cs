@@ -15,6 +15,7 @@ namespace BreakDanceBattles.Web.ViewModels.Competitions
         [Required]
         [MinLength(20)]
         public string Description { get; set; }
+
         public DateTime DateTime { get; set; }
 
         public int CountryId { get; set; }
