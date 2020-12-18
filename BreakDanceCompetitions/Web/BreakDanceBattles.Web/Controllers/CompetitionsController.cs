@@ -141,7 +141,7 @@ namespace BreakDanceBattles.Web.Controllers
         }
         public IActionResult MyCompetitions(int id = 1) 
         {
-            const int ItemsPerPage = 12;
+            const int ItemsPerPage = 8;
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var viewModel = new CompetitionListViewModel
             {
@@ -153,30 +153,7 @@ namespace BreakDanceBattles.Web.Controllers
  
             return this.View(viewModel);
         }
-        public IActionResult JoinedCompetitions(int id = 1)
-        {
-            const int ItemsPerPage = 12;
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var viewModel = new CompetitionListViewModel
-            {
-                ItemsPerPage = ItemsPerPage,
-                PageNumber = id,
-                CompetitionsCount = this.competitionService.GetJoinedCount(userId),
-                Competitions = this.competitionService.GetJoinedCompetitions(id, ItemsPerPage, userId),
-            };
 
-            return this.View(viewModel);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Join(int id)
-        {
-
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            await this.competitionService.JoinCompetition(id, userId);
-            return this.Redirect($"/Competitions/ById/{id}");
-
-        }
 
     }
 }

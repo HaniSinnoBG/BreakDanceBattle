@@ -42,7 +42,7 @@
                         <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete</button>
                     }
 
-                    <form method="post" asp-action="Join" asp-route-id="@Model.Id">
+                    <form method="post" asp-controller="JoinCompetition" asp-action="Join" asp-route-id="@Model.Id">
                         <button class="btn btn-success">Join</button>
                     </form>
                 </div>

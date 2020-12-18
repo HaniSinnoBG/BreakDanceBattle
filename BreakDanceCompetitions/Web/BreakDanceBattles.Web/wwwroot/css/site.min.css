@@ -1,1 +1,102 @@
-a.navbar-brand{white-space:normal;text-align:center;word-break:break-all}html{font-size:14px}@media(min-width:768px){html{font-size:16px}}.border-top{border-top:1px solid #e5e5e5}.border-bottom{border-bottom:1px solid #e5e5e5}.box-shadow{box-shadow:0 .25rem .75rem rgba(0,0,0,.05)}button.accept-policy{font-size:1rem;line-height:inherit}html{position:relative;min-height:100%}body{margin-bottom:60px}.footer{position:absolute;bottom:0;width:100%;white-space:nowrap;height:60px;line-height:60px}.table_hover{background-color:#fff}.table_hover:hover{background-color:#f00}.more_info{font-size:1.5rem}.card-img-top{object-fit:cover}.hover-title{pointer-events:auto;cursor:pointer}.hover-image{visibility:hidden}body:not(.mobile) .hover-title:hover+.hover-image{visibility:visible;pointer-events:none}.hover-image{display:flex;position:fixed;top:50%;left:0%;transform:translate(-50%,0%);z-index:-1;pointer-events:none;flex-direction:column;align-items:center;justify-content:center;object-fit:cover}.hover-image img{max-width:100% !important;max-height:100% !important;width:auto !important;height:auto !important;margin-bottom:0}
+﻿a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all
+}
+
+html {
+    font-size: 14px
+}
+
+@media(min-width:768px) {
+    html {
+        font-size: 16px
+    }
+}
+
+.border-top {
+    border-top: 1px solid #e5e5e5
+}
+
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0,0,0,.05)
+}
+
+button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit
+}
+
+html {
+    position: relative;
+    min-height: 100%
+}
+
+body {
+    margin-bottom: 60px
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    height: 60px;
+    line-height: 60px
+}
+
+.table_hover {
+    background-color: #fff
+}
+
+    .table_hover:hover {
+        background-color: #f00
+    }
+
+.more_info {
+    font-size: 1.5rem
+}
+
+.card-img-top {
+    object-fit: cover
+}
+
+.hover-title {
+    pointer-events: auto;
+    cursor: pointer
+}
+
+.hover-image {
+    visibility: hidden
+}
+
+body:not(.mobile) .hover-title:hover + .hover-image {
+    visibility: visible;
+    pointer-events: none
+}
+
+.hover-image {
+    display: flex;
+    position: fixed;
+    top: 50%;
+    left: 0%;
+    transform: translate(-50%,0%);
+    z-index: -1;
+    pointer-events: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    object-fit: cover
+}
+
+    .hover-image img {
+        max-width: 100% !important;
+        max-height: 100% !important;
+        width: auto !important;
+        height: auto !important;
+        margin-bottom: 0
+    }

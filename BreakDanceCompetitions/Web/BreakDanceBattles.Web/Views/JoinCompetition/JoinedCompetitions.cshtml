@@ -1,10 +1,10 @@
 ﻿@model BreakDanceBattles.Web.ViewModels.Competitions.CompetitionListViewModel
 @{
 }
-<div class="p-3 m-1 rounded" style="background-color: #Def2f1">
 
-    <a class="btn btn-primary" asp-area="" asp-controller="JoinCompetition" asp-action="JoinedCompetitions"> See Joined Competitions</a>
-    <h1 class="d-flex justify-content-center">My Competitions</h1>
+<div class="p-3 m-1 rounded" style="background-color: #Def2f1">
+    <a class="btn btn-primary" asp-area="" asp-controller="Competitions" asp-action="MyCompetitions"> See Your Competitions</a>
+    <h1 class="d-flex justify-content-center">Joined Competitions</h1>
     <div class="row d-flex justify-content-center">
         @foreach (var competition in this.Model.Competitions)
     {
@@ -13,7 +13,7 @@
         {
             categories += category.CategoryName + " ";
         };
-        <div class="col col-md-auto card p-1 m-1" style="width: 16rem;">
+        <div class="col col-md-auto card p-1 m-1" style="width: 17rem;">
             <img src="@competition.ImageUrl" class="card-img-top" alt="..." style="width:auto;height:10rem">
             <div class="card-body">
                 <h5 class="card-title d-flex justify-content-center"><a asp-action="ById" asp-route-id="@competition.Id">@competition.Name</a></h5>
@@ -45,4 +45,3 @@
         </ul>
     </nav>
 </div>
-

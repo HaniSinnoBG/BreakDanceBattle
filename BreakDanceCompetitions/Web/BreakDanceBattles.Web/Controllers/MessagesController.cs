@@ -66,10 +66,8 @@ namespace BreakDanceBattles.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
-
                 await this.messagesService.DeleteAsync(id);
                 return this.Redirect("/Messages/AllMessages");
-
         }
     }
 }
