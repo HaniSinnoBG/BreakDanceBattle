@@ -34,6 +34,9 @@ a.navbar-brand {
 .btn {
     background-color: #3aafa9;
 }
+.btn-danger {
+    background-color: crimson !important
+}
 
 @media (min-width: 768px) {
     html {
